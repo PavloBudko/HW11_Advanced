@@ -1,46 +1,20 @@
-const arrayOfHieroglyphs = [];
-
-function getLength() {
-
-    do {
-        length = +prompt('Введіть число від 1 до 100:', 100);
-    } while (isNaN(length) || length < 1 || length > 100 || length == ' ');
-
-    return length;
-}
-
-function getRandomChinese(length) {
+async function getRandomChinese(length){
     
-    const loopPromise = new Promise (function(resolve) {
+    let res = ``;
 
-        for (i = 0; i < length; i++) {
+    for(i = 0; i < length; i++){
+      let getPromise = new Promise((resolve, reject)=>{
+        setTimeout(() => {
+             let sign = Date.now().toString().slice(-5);
+             let signString = String.fromCharCode(sign);
 
-            (function (i) {
+             resolve(signString);
+          }, 50*length);
+      })
+      res += await getPromise;
+    }
+    console.log(res)
 
-                setTimeout ( () => {
-
-                    date = Date.now(); 
-                    hieroglyph = String.fromCharCode(date.toString().slice(-5));
-                    arrayOfHieroglyphs.push(hieroglyph);
-
-                    console.log(date, date.toString().slice(-5), hieroglyph);
-
-                }, 50 * i);
-
-            })(i);
-        }
-
-        resolve();
-    });
-
-    loopPromise.then( () => {
-
-        setTimeout( () => {
-
-            let hieroglyphs = arrayOfHieroglyphs.join(' ');
-            console.log(hieroglyphs);
-
-        }, (length * 50));
-    });
 }
-getRandomChinese(getLength());
+
+getRandomChinese(10)
